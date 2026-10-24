@@ -1,0 +1,270 @@
+data:
+  raw_path: "data/raw/DataCoSupplyChainDataset.csv"
+  processed_dir: "data/processed"
+  encoding: "latin1"
+  target:
+    name: "days_for_shipping_real"
+    dtype: "int64"
+    min: 0
+    max: 6
+  date_columns:
+    - "order_date_dateorders"
+    - "shipping_date_dateorders"
+  columns:
+    "Type":
+      name: "type"
+      dtype: "category"
+    "Days for shipping (real)":
+      name: "days_for_shipping_real"
+      dtype: "int64"
+    "Days for shipment (scheduled)":
+      name: "days_for_shipment_scheduled"
+      dtype: "int64"
+    "Benefit per order":
+      name: "benefit_per_order"
+      dtype: "float64"
+    "Sales per customer":
+      name: "sales_per_customer"
+      dtype: "float64"
+    "Delivery Status":
+      name: "delivery_status"
+      dtype: "category"
+    "Late_delivery_risk":
+      name: "late_delivery_risk"
+      dtype: "category"
+    "Category Id":
+      name: "category_id"
+      dtype: "category"
+    "Category Name":
+      name: "category_name"
+      dtype: "category"
+    "Customer City":
+      name: "customer_city"
+      dtype: "string"
+    "Customer Country":
+      name: "customer_country"
+      dtype: "category"
+    "Customer Email":
+      name: "customer_email"
+      dtype: "string"
+    "Customer Fname":
+      name: "customer_fname"
+      dtype: "string"
+    "Customer Id":
+      name: "customer_id"
+      dtype: "string"
+    "Customer Lname":
+      name: "customer_lname"
+      dtype: "string"
+    "Customer Password":
+      name: "customer_password"
+      dtype: "string"
+    "Customer Segment":
+      name: "customer_segment"
+      dtype: "category"
+    "Customer State":
+      name: "customer_state"
+      dtype: "category"
+    "Customer Street":
+      name: "customer_street"
+      dtype: "string"
+    "Customer Zipcode":
+      name: "customer_zipcode"
+      dtype: "string"
+    "Department Id":
+      name: "department_id"
+      dtype: "category"
+    "Department Name":
+      name: "department_name"
+      dtype: "category"
+    "Latitude":
+      name: "latitude"
+      dtype: "float64"
+    "Longitude":
+      name: "longitude"
+      dtype: "float64"
+    "Market":
+      name: "market"
+      dtype: "category"
+    "Order City":
+      name: "order_city"
+      dtype: "string"
+    "Order Country":
+      name: "order_country"
+      dtype: "string"
+    "Order Customer Id":
+      name: "order_customer_id"
+      dtype: "string"
+    "order date (DateOrders)":
+      name: "order_date_dateorders"
+      dtype: "datetime64[ns]"
+    "Order Id":
+      name: "order_id"
+      dtype: "string"
+    "Order Item Cardprod Id":
+      name: "order_item_cardprod_id"
+      dtype: "category"
+    "Order Item Discount":
+      name: "order_item_discount"
+      dtype: "float64"
+    "Order Item Discount Rate":
+      name: "order_item_discount_rate"
+      dtype: "float64"
+    "Order Item Id":
+      name: "order_item_id"
+      dtype: "string"
+    "Order Item Product Price":
+      name: "order_item_product_price"
+      dtype: "float64"
+    "Order Item Profit Ratio":
+      name: "order_item_profit_ratio"
+      dtype: "float64"
+    "Order Item Quantity":
+      name: "order_item_quantity"
+      dtype: "int64"
+    "Sales":
+      name: "sales"
+      dtype: "float64"
+    "Order Item Total":
+      name: "order_item_total"
+      dtype: "float64"
+    "Order Profit Per Order":
+      name: "order_profit_per_order"
+      dtype: "float64"
+    "Order Region":
+      name: "order_region"
+      dtype: "category"
+    "Order State":
+      name: "order_state"
+      dtype: "string"
+    "Order Status":
+      name: "order_status"
+      dtype: "category"
+    "Order Zipcode":
+      name: "order_zipcode"
+      dtype: "string"
+    "Product Card Id":
+      name: "product_card_id"
+      dtype: "category"
+    "Product Category Id":
+      name: "product_category_id"
+      dtype: "category"
+    "Product Description":
+      name: "product_description"
+      dtype: "string"
+    "Product Image":
+      name: "product_image"
+      dtype: "string"
+    "Product Name":
+      name: "product_name"
+      dtype: "string"
+    "Product Price":
+      name: "product_price"
+      dtype: "float64"
+    "Product Status":
+      name: "product_status"
+      dtype: "category"
+    "shipping date (DateOrders)":
+      name: "shipping_date_dateorders"
+      dtype: "datetime64[ns]"
+    "Shipping Mode":
+      name: "shipping_mode"
+      dtype: "category"
+
+preprocessing:
+  # 1. Post-hoc outcome / shipping columns that leak the target (days_for_shipping_real)
+  drop_leakage:
+    - "shipping_date_dateorders"
+    - "delivery_status"
+    - "late_delivery_risk"
+    - "order_status"
+    - "shipping_delay_days"
+
+  # 2. Mostly-missing or zero-variance columns
+  drop_missing_or_constant:
+    - "product_description"   # 100.0% missing
+    - "order_zipcode"         # 86.24% missing
+    - "product_status"        # 100.0% constant (0)
+
+  # 3. Non-predictive customer PII and raw metadata strings
+  drop_pii_or_metadata:
+    - "customer_email"
+    - "customer_password"
+    - "customer_fname"
+    - "customer_lname"
+    - "customer_street"
+    - "customer_zipcode"
+    - "product_image"
+
+  # 4. Exact 1-to-1 duplicate columns (r = 1.00 or Cramér's V = 1.00)
+  drop_exact_duplicates:
+    - "order_profit_per_order"     # identical to benefit_per_order
+    - "sales_per_customer"         # identical to order_item_total
+    - "order_item_product_price"   # identical to product_price
+    - "product_category_id"        # identical to category_id
+    - "order_item_cardprod_id"     # identical to product_card_id
+    - "order_customer_id"          # identical to customer_id
+    - "department_name"            # 1-to-1 bijection with department_id
+    - "product_name"               # 1-to-1 bijection with product_card_id
+    - "category_name"              # redundant with category_id
+
+  # 5. Algebraically / deterministically collinear columns to prune
+  prune_collinear:
+    - "sales"                      # = product_price * order_item_quantity
+    - "order_item_discount"        # = sales * order_item_discount_rate
+    - "order_item_total"           # = sales - order_item_discount
+    - "benefit_per_order"          # = order_item_total * order_item_profit_ratio
+    - "days_for_shipment_scheduled" # 1-to-1 deterministic with shipping_mode (keep shipping_mode)
+
+  # 6. Entity IDs & timestamps retained during preprocessing for group-splitting
+  #    and aggregation in feature engineering, then dropped prior to model fitting
+  entity_and_time_keys:
+    - "order_id"
+    - "order_item_id"
+    - "customer_id"
+    - "order_date_dateorders"
+
+  split:
+    group_col: "order_id"
+    test_size: 0.20
+    val_size: 0.10
+    random_state: 42
+
+models:
+  dir: "models"
+  artifact_name: "lgbm_shipping_delay_model.joblib"
+  metrics_name: "lgbm_metrics.json"
+  split_type: "chronological"
+  drop_non_stationary_cols:
+    - "order_year"
+  low_card_cats:
+    - "type"
+    - "shipping_mode"
+    - "customer_country"
+    - "customer_segment"
+    - "market"
+    - "department_id"
+    - "order_region"
+  quantiles:
+    p50: 0.50
+    p90: 0.90
+  target_bounds:
+    min: 0
+    max: 6
+  delay_bounds:
+    min: 0
+    max: 6
+  lgbm_params:
+    n_estimators: 400
+    max_depth: 7
+    num_leaves: 63
+    min_child_samples: 50
+    learning_rate: 0.08
+    subsample: 0.8
+    subsample_freq: 1
+    colsample_bytree: 0.8
+    reg_lambda: 1.5
+    early_stopping_rounds: 25
+    random_state: 42
+    n_jobs: -1
+    verbose: -1

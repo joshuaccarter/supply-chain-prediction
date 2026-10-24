@@ -1,0 +1,1289 @@
+{
+  "production_split": "chronological",
+  "chronological": {
+    "metadata": {
+      "model_family": "LightGBM Quantile Regressor (P50 & P90)",
+      "split_type": "chronological",
+      "quantiles": {
+        "p50": 0.5,
+        "p90": 0.9
+      },
+      "n_train_rows": 138062,
+      "n_val_rows": 19680,
+      "n_test_rows": 22777,
+      "n_engineered_features": 38,
+      "n_encoded_features": 71,
+      "best_iteration_p50": 112,
+      "best_iteration_p90": 1,
+      "train_time_p50_sec": 1.004,
+      "train_time_p90_sec": 0.3225,
+      "test_summary": {
+        "p50_exact_accuracy": 0.36659788383017955,
+        "p50_within_1_day_accuracy": 0.6798085788295211,
+        "p50_mae": 0.9589059138604733,
+        "p50_rmse": 1.2730036379689285,
+        "p50_r2": 0.3829465054034654,
+        "p50_qwk": 0.5592820926973527,
+        "p50_pinball_loss": 0.47945295693023665,
+        "p90_sla_compliance_pct": 100.0,
+        "p90_late_breach_pct": 0.0,
+        "p90_mean_buffer_cushion_days": 2.5134126531149845,
+        "p90_pinball_loss": 0.2513412653114984
+      },
+      "artifact_path": "C:\\Users\\joshu\\Documents\\Project Portfolio\\supply-chain-prediction\\models\\lgbm_shipping_delay_model.joblib",
+      "metrics_path": "C:\\Users\\joshu\\Documents\\Project Portfolio\\supply-chain-prediction\\models\\lgbm_metrics.json"
+    },
+    "validation": {
+      "model_name": "LightGBM Quantile",
+      "p50": {
+        "model": "LightGBM Quantile (P50)",
+        "n_samples": 19680,
+        "mae": 0.9517276422764228,
+        "rmse": 1.264227969048137,
+        "r2": 0.3821579343551209,
+        "pinball_loss_p50": 0.4758638211382114,
+        "pinball_loss_p90": 0.4785060975609756,
+        "exact_accuracy": 0.36783536585365856,
+        "within_1_day_accuracy": 0.6841463414634147,
+        "balanced_accuracy": 0.49725592308332345,
+        "macro_f1": 0.43460262129886557,
+        "weighted_f1": 0.3224813908181679,
+        "qwk": 0.5576931506221623,
+        "sla_compliance_rate": 0.6830284552845528,
+        "sla_compliance_pct": 68.30284552845528,
+        "late_breach_rate": 0.31697154471544714,
+        "late_breach_pct": 31.697154471544714,
+        "mean_buffer_cushion_days": 0.4725609756097561,
+        "mean_signed_bias_days": -0.0066056910569105695,
+        "train_time_sec": 1.0039631000000782,
+        "pred_time_sec": 0.017685099999994236,
+        "continuous_pinball_loss_p50": 0.4838215348278853,
+        "continuous_mae": 0.9676430696557706
+      },
+      "p90": {
+        "model": "LightGBM Quantile (P90)",
+        "n_samples": 19680,
+        "mae": 2.5052845528455285,
+        "rmse": 2.977131674637533,
+        "r2": -2.426279376563752,
+        "pinball_loss_p50": 1.2526422764227643,
+        "pinball_loss_p90": 0.2505284552845528,
+        "exact_accuracy": 0.15508130081300814,
+        "within_1_day_accuracy": 0.31122967479674796,
+        "balanced_accuracy": 0.14285714285714285,
+        "macro_f1": 0.03836002111560795,
+        "weighted_f1": 0.04164245381676058,
+        "qwk": 0.0,
+        "sla_compliance_rate": 1.0,
+        "sla_compliance_pct": 100.0,
+        "late_breach_rate": 0.0,
+        "late_breach_pct": 0.0,
+        "mean_buffer_cushion_days": 2.5052845528455285,
+        "mean_signed_bias_days": 2.5052845528455285,
+        "train_time_sec": 0.32247480000000905,
+        "pred_time_sec": 0.017685099999994236,
+        "continuous_pinball_loss_p90": 0.2505284552845528
+      },
+      "joint": {
+        "n_samples": 19680,
+        "quantile_non_crossing_rate": 1.0,
+        "mean_interval_width_days": 2.511890243902439,
+        "interval_coverage_p50_to_p90_pct": 68.48069105691057,
+        "late_breach_reduction_pct_points": 31.697154471544714,
+        "p50_confusion_matrix": [
+          [
+            497,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            519,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3078,
+            62,
+            3082,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            72,
+            3045,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            122,
+            3064,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            75,
+            2989,
+            9,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            68,
+            2981,
+            3,
+            0
+          ]
+        ],
+        "p90_confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            497
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            519
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6227
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3122
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3190
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3073
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3052
+          ]
+        ]
+      },
+      "tier_breakdown": [
+        {
+          "scheduled_days": 0,
+          "shipping_tier": "Same Day (0d)",
+          "n_samples": 1016,
+          "actual_mean_delay": 0.5108267716535433,
+          "actual_max_delay": 1,
+          "p50_mean_pred": 0.5108267716535433,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.5489173228346454,
+          "p90_mean_cushion_days": 5.4891732283464565
+        },
+        {
+          "scheduled_days": 1,
+          "shipping_tier": "First Class (1d)",
+          "n_samples": 3083,
+          "actual_mean_delay": 2.0,
+          "actual_max_delay": 2,
+          "p50_mean_pred": 2.0016217969510217,
+          "p50_exact_accuracy": 0.9983782030489783,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.001621796951021732,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.39999999999999997,
+          "p90_mean_cushion_days": 4.0
+        },
+        {
+          "scheduled_days": 2,
+          "shipping_tier": "Second Class (2d)",
+          "n_samples": 3782,
+          "actual_mean_delay": 3.94420941300899,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.9500264410364885,
+          "p50_exact_accuracy": 0.20015864621893178,
+          "p50_within_1_day_accuracy": 0.5830248545742993,
+          "p50_mae": 1.2252776308831306,
+          "p50_late_breach_pct": 39.846641988365946,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.20557905869910098,
+          "p90_mean_cushion_days": 2.05579058699101
+        },
+        {
+          "scheduled_days": 4,
+          "shipping_tier": "Standard Class (4d)",
+          "n_samples": 11799,
+          "actual_mean_delay": 3.9981354352063736,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.9848292228154927,
+          "p50_exact_accuracy": 0.2023900330536486,
+          "p50_within_1_day_accuracy": 0.6068310873802865,
+          "p50_mae": 1.1942537503178234,
+          "p50_late_breach_pct": 40.09661835748793,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.2001864564793626,
+          "p90_mean_cushion_days": 2.0018645647936264
+        }
+      ]
+    },
+    "test": {
+      "model_name": "LightGBM Quantile",
+      "p50": {
+        "model": "LightGBM Quantile (P50)",
+        "n_samples": 22777,
+        "mae": 0.9589059138604733,
+        "rmse": 1.2730036379689285,
+        "r2": 0.3829465054034654,
+        "pinball_loss_p50": 0.47945295693023665,
+        "pinball_loss_p90": 0.48228037054923834,
+        "exact_accuracy": 0.36659788383017955,
+        "within_1_day_accuracy": 0.6798085788295211,
+        "balanced_accuracy": 0.497927228699221,
+        "macro_f1": 0.4328041436680242,
+        "weighted_f1": 0.3211413425762355,
+        "qwk": 0.5592820926973527,
+        "sla_compliance_rate": 0.6833647978223647,
+        "sla_compliance_pct": 68.33647978223647,
+        "late_breach_rate": 0.31663520217763536,
+        "late_breach_pct": 31.663520217763537,
+        "mean_buffer_cushion_days": 0.4759186899064846,
+        "mean_signed_bias_days": -0.007068534047504061,
+        "train_time_sec": 1.0039631000000782,
+        "pred_time_sec": 0.019894399999998313,
+        "continuous_pinball_loss_p50": 0.4892744021716513,
+        "continuous_mae": 0.9785488043433026
+      },
+      "p90": {
+        "model": "LightGBM Quantile (P90)",
+        "n_samples": 22777,
+        "mae": 2.5134126531149845,
+        "rmse": 2.9905677774560053,
+        "r2": -2.4054211256883224,
+        "pinball_loss_p50": 1.2567063265574923,
+        "pinball_loss_p90": 0.2513412653114984,
+        "exact_accuracy": 0.15638582780875446,
+        "within_1_day_accuracy": 0.3132545989375247,
+        "balanced_accuracy": 0.14285714285714285,
+        "macro_f1": 0.03863906320339746,
+        "weighted_f1": 0.04229821319372667,
+        "qwk": 0.0,
+        "sla_compliance_rate": 1.0,
+        "sla_compliance_pct": 100.0,
+        "late_breach_rate": 0.0,
+        "late_breach_pct": 0.0,
+        "mean_buffer_cushion_days": 2.5134126531149845,
+        "mean_signed_bias_days": 2.5134126531149845,
+        "train_time_sec": 0.32247480000000905,
+        "pred_time_sec": 0.019894399999998313,
+        "continuous_pinball_loss_p90": 0.2513412653114984
+      },
+      "joint": {
+        "n_samples": 22777,
+        "quantile_non_crossing_rate": 1.0,
+        "mean_interval_width_days": 2.5204811871624884,
+        "interval_coverage_p50_to_p90_pct": 68.32330860078149,
+        "late_breach_reduction_pct_points": 31.663520217763537,
+        "p50_confusion_matrix": [
+          [
+            583,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            719,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3448,
+            92,
+            3600,
+            10,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            90,
+            3507,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            82,
+            3505,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            116,
+            3452,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            111,
+            3451,
+            0,
+            0
+          ]
+        ],
+        "p90_confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            583
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            719
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7150
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3602
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3588
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3573
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3562
+          ]
+        ]
+      },
+      "tier_breakdown": [
+        {
+          "scheduled_days": 0,
+          "shipping_tier": "Same Day (0d)",
+          "n_samples": 1302,
+          "actual_mean_delay": 0.5522273425499232,
+          "actual_max_delay": 1,
+          "p50_mean_pred": 0.5522273425499232,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.5447772657450075,
+          "p90_mean_cushion_days": 5.447772657450077
+        },
+        {
+          "scheduled_days": 1,
+          "shipping_tier": "First Class (1d)",
+          "n_samples": 3449,
+          "actual_mean_delay": 2.0,
+          "actual_max_delay": 2,
+          "p50_mean_pred": 2.000289939112786,
+          "p50_exact_accuracy": 0.9997100608872137,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.00028993911278631486,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.39999999999999997,
+          "p90_mean_cushion_days": 4.0
+        },
+        {
+          "scheduled_days": 2,
+          "shipping_tier": "Second Class (2d)",
+          "n_samples": 4521,
+          "actual_mean_delay": 4.00464499004645,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.9462508294625085,
+          "p50_exact_accuracy": 0.19796505197965053,
+          "p50_within_1_day_accuracy": 0.6000884760008848,
+          "p50_mae": 1.2112364521123644,
+          "p50_late_breach_pct": 41.119221411192214,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.19953550099535497,
+          "p90_mean_cushion_days": 1.9953550099535502
+        },
+        {
+          "scheduled_days": 4,
+          "shipping_tier": "Standard Class (4d)",
+          "n_samples": 13505,
+          "actual_mean_delay": 3.97571269900037,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.98326545723806,
+          "p50_exact_accuracy": 0.20029618659755646,
+          "p50_within_1_day_accuracy": 0.5938541281007035,
+          "p50_mae": 1.2116993706034802,
+          "p50_late_breach_pct": 39.637171417993336,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.20242873009996293,
+          "p90_mean_cushion_days": 2.02428730099963
+        }
+      ]
+    },
+    "top_features": [
+      {
+        "feature": "order_total_sales",
+        "p50_splits": 1067.0,
+        "p90_splits": 0.0,
+        "total_splits": 1067.0
+      },
+      {
+        "feature": "longitude",
+        "p50_splits": 735.0,
+        "p90_splits": 0.0,
+        "total_splits": 735.0
+      },
+      {
+        "feature": "latitude",
+        "p50_splits": 537.0,
+        "p90_splits": 0.0,
+        "total_splits": 537.0
+      },
+      {
+        "feature": "order_doy_cos",
+        "p50_splits": 462.0,
+        "p90_splits": 0.0,
+        "total_splits": 462.0
+      },
+      {
+        "feature": "order_hour",
+        "p50_splits": 428.0,
+        "p90_splits": 0.0,
+        "total_splits": 428.0
+      },
+      {
+        "feature": "order_dayofyear",
+        "p50_splits": 406.0,
+        "p90_splits": 0.0,
+        "total_splits": 406.0
+      },
+      {
+        "feature": "order_day",
+        "p50_splits": 399.0,
+        "p90_splits": 0.0,
+        "total_splits": 399.0
+      },
+      {
+        "feature": "order_total_units",
+        "p50_splits": 380.0,
+        "p90_splits": 0.0,
+        "total_splits": 380.0
+      },
+      {
+        "feature": "order_doy_sin",
+        "p50_splits": 350.0,
+        "p90_splits": 0.0,
+        "total_splits": 350.0
+      },
+      {
+        "feature": "order_hour_sin",
+        "p50_splits": 214.0,
+        "p90_splits": 0.0,
+        "total_splits": 214.0
+      },
+      {
+        "feature": "order_hour_cos",
+        "p50_splits": 167.0,
+        "p90_splits": 0.0,
+        "total_splits": 167.0
+      },
+      {
+        "feature": "order_line_item_count",
+        "p50_splits": 137.0,
+        "p90_splits": 0.0,
+        "total_splits": 137.0
+      },
+      {
+        "feature": "order_dayofweek",
+        "p50_splits": 135.0,
+        "p90_splits": 0.0,
+        "total_splits": 135.0
+      },
+      {
+        "feature": "market_Pacific Asia",
+        "p50_splits": 121.0,
+        "p90_splits": 0.0,
+        "total_splits": 121.0
+      },
+      {
+        "feature": "order_dow_sin",
+        "p50_splits": 117.0,
+        "p90_splits": 0.0,
+        "total_splits": 117.0
+      }
+    ]
+  },
+  "group_random": {
+    "metadata": {
+      "model_family": "LightGBM Quantile Regressor (P50 & P90)",
+      "split_type": "group_random",
+      "quantiles": {
+        "p50": 0.5,
+        "p90": 0.9
+      },
+      "n_train_rows": 125948,
+      "n_val_rows": 18105,
+      "n_test_rows": 36466,
+      "n_engineered_features": 38,
+      "n_encoded_features": 76,
+      "best_iteration_p50": 104,
+      "best_iteration_p90": 1,
+      "train_time_p50_sec": 1.014,
+      "train_time_p90_sec": 0.3248,
+      "test_summary": {
+        "p50_exact_accuracy": 0.3636812373169528,
+        "p50_within_1_day_accuracy": 0.6802775187846213,
+        "p50_mae": 0.9605111610815554,
+        "p50_rmse": 1.2719417409004357,
+        "p50_r2": 0.3852091052487625,
+        "p50_qwk": 0.5611865757310741,
+        "p50_pinball_loss": 0.4802555805407777,
+        "p90_sla_compliance_pct": 100.0,
+        "p90_late_breach_pct": 0.0,
+        "p90_mean_buffer_cushion_days": 2.50968025009598,
+        "p90_pinball_loss": 0.250968025009598
+      }
+    },
+    "validation": {
+      "model_name": "LightGBM Quantile",
+      "p50": {
+        "model": "LightGBM Quantile (P50)",
+        "n_samples": 18105,
+        "mae": 0.9389119027892847,
+        "rmse": 1.2591559180936038,
+        "r2": 0.4015564604824894,
+        "pinball_loss_p50": 0.46945595139464236,
+        "pinball_loss_p90": 0.479950289975145,
+        "exact_accuracy": 0.3796188898094449,
+        "within_1_day_accuracy": 0.6862192764429715,
+        "balanced_accuracy": 0.5013475471275274,
+        "macro_f1": 0.4383855701482512,
+        "weighted_f1": 0.33188060863852203,
+        "qwk": 0.5760711109141801,
+        "sla_compliance_rate": 0.6844518088925711,
+        "sla_compliance_pct": 68.4451808892571,
+        "late_breach_rate": 0.3155481911074289,
+        "late_breach_pct": 31.554819110742887,
+        "mean_buffer_cushion_days": 0.4563380281690141,
+        "mean_signed_bias_days": -0.02623584645125656,
+        "train_time_sec": 1.014036899999951,
+        "pred_time_sec": 0.01818670000000111,
+        "continuous_pinball_loss_p50": 0.48357456798777726,
+        "continuous_mae": 0.9671491359755545
+      },
+      "p90": {
+        "model": "LightGBM Quantile (P90)",
+        "n_samples": 18105,
+        "mae": 2.5109085887876277,
+        "rmse": 2.9923219429614587,
+        "r2": -2.3797205740554848,
+        "pinball_loss_p50": 1.2554542943938138,
+        "pinball_loss_p90": 0.25109085887876265,
+        "exact_accuracy": 0.15735984534658934,
+        "within_1_day_accuracy": 0.312123722728528,
+        "balanced_accuracy": 0.14285714285714285,
+        "macro_f1": 0.03884699818650377,
+        "weighted_f1": 0.04279070338765229,
+        "qwk": 0.0,
+        "sla_compliance_rate": 1.0,
+        "sla_compliance_pct": 100.0,
+        "late_breach_rate": 0.0,
+        "late_breach_pct": 0.0,
+        "mean_buffer_cushion_days": 2.5109085887876277,
+        "mean_signed_bias_days": 2.5109085887876277,
+        "train_time_sec": 0.3247542000000294,
+        "pred_time_sec": 0.01818670000000111,
+        "continuous_pinball_loss_p90": 0.25109085887876265
+      },
+      "joint": {
+        "n_samples": 18105,
+        "quantile_non_crossing_rate": 1.0,
+        "mean_interval_width_days": 2.537144435238884,
+        "interval_coverage_p50_to_p90_pct": 69.51670809168738,
+        "late_breach_reduction_pct_points": 31.554819110742887,
+        "p50_confusion_matrix": [
+          [
+            540,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            488,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            2876,
+            68,
+            2722,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            71,
+            2702,
+            17,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            70,
+            2890,
+            8,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            92,
+            2702,
+            8,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            84,
+            2764,
+            1,
+            0
+          ]
+        ],
+        "p90_confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            540
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            488
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5668
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2790
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2968
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2802
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2849
+          ]
+        ]
+      },
+      "tier_breakdown": [
+        {
+          "scheduled_days": 0,
+          "shipping_tier": "Same Day (0d)",
+          "n_samples": 1028,
+          "actual_mean_delay": 0.47470817120622566,
+          "actual_max_delay": 1,
+          "p50_mean_pred": 0.47470817120622566,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.5525291828793774,
+          "p90_mean_cushion_days": 5.525291828793774
+        },
+        {
+          "scheduled_days": 1,
+          "shipping_tier": "First Class (1d)",
+          "n_samples": 2876,
+          "actual_mean_delay": 2.0,
+          "actual_max_delay": 2,
+          "p50_mean_pred": 2.0,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.39999999999999986,
+          "p90_mean_cushion_days": 4.0
+        },
+        {
+          "scheduled_days": 2,
+          "shipping_tier": "Second Class (2d)",
+          "n_samples": 3547,
+          "actual_mean_delay": 4.012968705948689,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.969269805469411,
+          "p50_exact_accuracy": 0.20552579644770227,
+          "p50_within_1_day_accuracy": 0.6055821821257401,
+          "p50_mae": 1.1967860163518467,
+          "p50_late_breach_pct": 40.48491683112489,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.19870312940513105,
+          "p90_mean_cushion_days": 1.987031294051311
+        },
+        {
+          "scheduled_days": 4,
+          "shipping_tier": "Standard Class (4d)",
+          "n_samples": 10654,
+          "actual_mean_delay": 4.007508916838746,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.977473249483762,
+          "p50_exact_accuracy": 0.2102496714848883,
+          "p50_within_1_day_accuracy": 0.5980852262061198,
+          "p50_mae": 1.1971090670170828,
+          "p50_late_breach_pct": 40.144546649145866,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.19924910831612533,
+          "p90_mean_cushion_days": 1.992491083161254
+        }
+      ]
+    },
+    "test": {
+      "model_name": "LightGBM Quantile",
+      "p50": {
+        "model": "LightGBM Quantile (P50)",
+        "n_samples": 36466,
+        "mae": 0.9605111610815554,
+        "rmse": 1.2719417409004357,
+        "r2": 0.3852091052487625,
+        "pinball_loss_p50": 0.4802555805407777,
+        "pinball_loss_p90": 0.48466516755333733,
+        "exact_accuracy": 0.3636812373169528,
+        "within_1_day_accuracy": 0.6802775187846213,
+        "balanced_accuracy": 0.49834210878837,
+        "macro_f1": 0.4354179862050853,
+        "weighted_f1": 0.3223452709676248,
+        "qwk": 0.5611865757310741,
+        "sla_compliance_rate": 0.6791806065924423,
+        "sla_compliance_pct": 67.91806065924423,
+        "late_breach_rate": 0.3208193934075577,
+        "late_breach_pct": 32.081939340755774,
+        "mean_buffer_cushion_days": 0.47474359677507816,
+        "mean_signed_bias_days": -0.011023967531399111,
+        "train_time_sec": 1.014036899999951,
+        "pred_time_sec": 0.03223880000007284,
+        "continuous_pinball_loss_p50": 0.4922236964108158,
+        "continuous_mae": 0.9844473928216316
+      },
+      "p90": {
+        "model": "LightGBM Quantile (P90)",
+        "n_samples": 36466,
+        "mae": 2.50968025009598,
+        "rmse": 2.98831340426987,
+        "r2": -2.393479838439597,
+        "pinball_loss_p50": 1.25484012504799,
+        "pinball_loss_p90": 0.250968025009598,
+        "exact_accuracy": 0.15556957165578894,
+        "within_1_day_accuracy": 0.3161849393956014,
+        "balanced_accuracy": 0.14285714285714285,
+        "macro_f1": 0.03846453743223956,
+        "weighted_f1": 0.04188738128590098,
+        "qwk": 0.0,
+        "sla_compliance_rate": 1.0,
+        "sla_compliance_pct": 100.0,
+        "late_breach_rate": 0.0,
+        "late_breach_pct": 0.0,
+        "mean_buffer_cushion_days": 2.50968025009598,
+        "mean_signed_bias_days": 2.50968025009598,
+        "train_time_sec": 0.3247542000000294,
+        "pred_time_sec": 0.03223880000007284,
+        "continuous_pinball_loss_p90": 0.250968025009598
+      },
+      "joint": {
+        "n_samples": 36466,
+        "quantile_non_crossing_rate": 1.0,
+        "mean_interval_width_days": 2.520704217627379,
+        "interval_coverage_p50_to_p90_pct": 68.45006307245104,
+        "late_breach_reduction_pct_points": 32.081939340755774,
+        "p50_confusion_matrix": [
+          [
+            1020,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            970,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            5581,
+            161,
+            5755,
+            21,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            214,
+            5539,
+            10,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            186,
+            5460,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            211,
+            5629,
+            17,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            142,
+            5520,
+            11,
+            0
+          ]
+        ],
+        "p90_confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1020
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            970
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            11518
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5763
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5665
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5857
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5673
+          ]
+        ]
+      },
+      "tier_breakdown": [
+        {
+          "scheduled_days": 0,
+          "shipping_tier": "Same Day (0d)",
+          "n_samples": 1990,
+          "actual_mean_delay": 0.48743718592964824,
+          "actual_max_delay": 1,
+          "p50_mean_pred": 0.48743718592964824,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.551256281407035,
+          "p90_mean_cushion_days": 5.5125628140703515
+        },
+        {
+          "scheduled_days": 1,
+          "shipping_tier": "First Class (1d)",
+          "n_samples": 5581,
+          "actual_mean_delay": 2.0,
+          "actual_max_delay": 2,
+          "p50_mean_pred": 2.0,
+          "p50_exact_accuracy": 1.0,
+          "p50_within_1_day_accuracy": 1.0,
+          "p50_mae": 0.0,
+          "p50_late_breach_pct": 0.0,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.3999999999999999,
+          "p90_mean_cushion_days": 4.0
+        },
+        {
+          "scheduled_days": 2,
+          "shipping_tier": "Second Class (2d)",
+          "n_samples": 7159,
+          "actual_mean_delay": 3.96591702751781,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.9607487079201005,
+          "p50_exact_accuracy": 0.2044978348931415,
+          "p50_within_1_day_accuracy": 0.5922614890347814,
+          "p50_mae": 1.2117614191926247,
+          "p50_late_breach_pct": 40.396703450202544,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.203408297248219,
+          "p90_mean_cushion_days": 2.03408297248219
+        },
+        {
+          "scheduled_days": 4,
+          "shipping_tier": "Standard Class (4d)",
+          "n_samples": 21736,
+          "actual_mean_delay": 3.9912587412587412,
+          "actual_max_delay": 6,
+          "p50_mean_pred": 3.9744663231505335,
+          "p50_exact_accuracy": 0.19447000368053,
+          "p50_within_1_day_accuracy": 0.5979020979020979,
+          "p50_mae": 1.2123205741626795,
+          "p50_late_breach_pct": 40.51803459698197,
+          "p90_mean_buffer": 6.0,
+          "p90_sla_compliance_pct": 100.0,
+          "p90_late_breach_pct": 0.0,
+          "p90_pinball_loss": 0.20087412587412581,
+          "p90_mean_cushion_days": 2.0087412587412588
+        }
+      ]
+    },
+    "top_features": [
+      {
+        "feature": "order_total_sales",
+        "p50_splits": 764.0,
+        "p90_splits": 0.0,
+        "total_splits": 764.0
+      },
+      {
+        "feature": "latitude",
+        "p50_splits": 717.0,
+        "p90_splits": 0.0,
+        "total_splits": 717.0
+      },
+      {
+        "feature": "longitude",
+        "p50_splits": 686.0,
+        "p90_splits": 0.0,
+        "total_splits": 686.0
+      },
+      {
+        "feature": "order_dayofyear",
+        "p50_splits": 398.0,
+        "p90_splits": 0.0,
+        "total_splits": 398.0
+      },
+      {
+        "feature": "order_total_units",
+        "p50_splits": 394.0,
+        "p90_splits": 0.0,
+        "total_splits": 394.0
+      },
+      {
+        "feature": "order_doy_cos",
+        "p50_splits": 367.0,
+        "p90_splits": 0.0,
+        "total_splits": 367.0
+      },
+      {
+        "feature": "order_day",
+        "p50_splits": 361.0,
+        "p90_splits": 0.0,
+        "total_splits": 361.0
+      },
+      {
+        "feature": "order_hour",
+        "p50_splits": 339.0,
+        "p90_splits": 0.0,
+        "total_splits": 339.0
+      },
+      {
+        "feature": "order_doy_sin",
+        "p50_splits": 292.0,
+        "p90_splits": 0.0,
+        "total_splits": 292.0
+      },
+      {
+        "feature": "order_hour_cos",
+        "p50_splits": 248.0,
+        "p90_splits": 0.0,
+        "total_splits": 248.0
+      },
+      {
+        "feature": "order_hour_sin",
+        "p50_splits": 189.0,
+        "p90_splits": 0.0,
+        "total_splits": 189.0
+      },
+      {
+        "feature": "order_dayofweek",
+        "p50_splits": 182.0,
+        "p90_splits": 0.0,
+        "total_splits": 182.0
+      },
+      {
+        "feature": "order_line_item_count",
+        "p50_splits": 177.0,
+        "p90_splits": 0.0,
+        "total_splits": 177.0
+      },
+      {
+        "feature": "shipping_mode_Second Class",
+        "p50_splits": 118.0,
+        "p90_splits": 0.0,
+        "total_splits": 118.0
+      },
+      {
+        "feature": "order_dow_cos",
+        "p50_splits": 117.0,
+        "p90_splits": 0.0,
+        "total_splits": 117.0
+      }
+    ]
+  }
+}
