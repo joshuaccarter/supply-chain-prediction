@@ -74,9 +74,7 @@ Many naive implementations attempt to model:
 1. A binary classification flag such as `late_delivery_risk` (1 if late, 0 otherwise).
 2. A delay residual relative to internal schedule quotes:
 
-$$
-\Delta_{\text{delay}} = \text{days\_for\_shipping\_real} - \text{days\_for\_shipment\_scheduled}
-$$
+   $\Delta_{\text{delay}} =$ `days_for_shipping_real` $-$ `days_for_shipment_scheduled`
 
 **The Critical Policy Feedback Loop**:
 Training on residual delays or late-delivery flags binds the predictive model to the company's internal quotation policies. If management increases the scheduled quote to provide a larger buffer, $\Delta_{\text{delay}}$ decreases and labels shift, corrupting future training data.
@@ -84,9 +82,7 @@ Training on residual delays or late-delivery flags binds the predictive model to
 **The Solution**:
 This engine directly models the immutable, physical transit duration:
 
-$$
-y = \text{days\_for\_shipping\_real} \in \{0, 1, 2, 3, 4, 5, 6\}
-$$
+$y =$ `days_for_shipping_real` $\in \{0, 1, 2, 3, 4, 5, 6\}$
 
 Predicting physical transit duration decouples the model from internal business quoting policies, eliminating the policy feedback loop entirely. Internal SLA buffers ($P_{90} - P_{50}$) are calculated dynamically from the predictive quantile distributions.
 
@@ -104,7 +100,7 @@ Exploratory data analysis across all 54 columns of the DataCo dataset revealed c
 | `order_zipcode` | Text | 86.24% missing; geographic routing is preserved by `latitude`, `longitude`, `order_country`, `order_city`. | **Dropped** (Sparse) |
 | `product_status` | Numeric | Zero-variance constant (0 for all records). | **Dropped** (Constant) |
 | Exact 1-to-1 Duplicates | Various | Columns with $r = 1.00$ or bijection: `order_profit_per_order` $\equiv$ `benefit_per_order`, `sales_per_customer` $\equiv$ `order_item_total`, `order_item_product_price` $\equiv$ `product_price`, `product_category_id` $\equiv$ `category_id`, `product_name` $\equiv$ `product_card_id`, `department_name` $\equiv$ `department_id`. | **Dropped** (Redundant) |
-| Algebraic Collinearities | Numeric | Deterministic formulas: $\text{sales} = \text{product\_price} \times \text{order\_item\_quantity}$, $\text{order\_item\_discount} = \text{sales} \times \text{order\_item\_discount\_rate}$, etc. | **Pruned** (Collinear) |
+| Algebraic Collinearities | Numeric | Deterministic formulas: `sales` $=$ `product_price` $\times$ `order_item_quantity`, `order_item_discount` $=$ `sales` $\times$ `order_item_discount_rate`, etc. | **Pruned** (Collinear) |
 
 ### Leakage-Proof Splitting Strategies
 
@@ -137,13 +133,13 @@ Raw Checkout Attributes
 #### 1. Temporal & Seasonal Cyclical Dynamics
 Logistics networks operate on strict diurnal cutoff windows and weekly transport cycles. Discrete integer calendar steps create artificial boundary discontinuities (e.g. 23:00 and 00:00 appear 23 units apart despite being consecutive hours). The pipeline projects calendar periods onto continuous harmonic waves:
 - **Diurnal Cutoffs (24-Hour Period)**: Captures daily warehouse carrier dispatch schedules:
-  $$\text{order\_hour\_sin} = \sin\left(\frac{2\pi \cdot \text{order\_hour}}{24}\right), \quad \text{order\_hour\_cos} = \cos\left(\frac{2\pi \cdot \text{order\_hour}}{24}\right)$$
+  `order_hour_sin` $= \sin(2\pi \cdot$ `order_hour` $/ 24)$, `order_hour_cos` $= \cos(2\pi \cdot$ `order_hour` $/ 24)$
 - **Weekly Transit Rhythm (7-Day Period)**: Models weekend linehaul pauses and carrier freight throttling:
-  $$\text{order\_dow\_sin} = \sin\left(\frac{2\pi \cdot \text{order\_dayofweek}}{7}\right), \quad \text{order\_dow\_cos} = \cos\left(\frac{2\pi \cdot \text{order\_dayofweek}}{7}\right)$$
+  `order_dow_sin` $= \sin(2\pi \cdot$ `order_dayofweek` $/ 7)$, `order_dow_cos` $= \cos(2\pi \cdot$ `order_dayofweek` $/ 7)$
 - **Seasonal Demand Cycle (12-Month Period)**: Models quarterly cadence across the financial calendar:
-  $$\text{order\_month\_sin} = \sin\left(\frac{2\pi \cdot \text{order\_month}}{12}\right), \quad \text{order\_month\_cos} = \cos\left(\frac{2\pi \cdot \text{order\_month}}{12}\right)$$
+  `order_month_sin` $= \sin(2\pi \cdot$ `order_month` $/ 12)$, `order_month_cos` $= \cos(2\pi \cdot$ `order_month` $/ 12)$
 - **Annual Solar Periodicity (365.25-Day Cycle)**: Models continuous annual seasonality without calendar-year boundaries:
-  $$\text{order\_doy\_sin} = \sin\left(\frac{2\pi \cdot \text{order\_dayofyear}}{365.25}\right), \quad \text{order\_doy\_cos} = \cos\left(\frac{2\pi \cdot \text{order\_dayofyear}}{365.25}\right)$$
+  `order_doy_sin` $= \sin(2\pi \cdot$ `order_dayofyear` $/ 365.25)$, `order_doy_cos` $= \cos(2\pi \cdot$ `order_dayofyear` $/ 365.25)$
 - **Operational Shift Flags**:
   - `is_weekend_order`: Flags Saturday and Sunday orders (1 if day of week $\ge 5$, 0 otherwise), capturing carrier weekend dispatch pauses.
   - `is_after_hours_order`: Flags orders placed outside standard warehouse operating windows (< 08:00 or $\ge$ 18:00).
@@ -152,20 +148,20 @@ Logistics networks operate on strict diurnal cutoff windows and weekly transport
 #### 2. Orthogonal Financial & Profitability Ratios
 After removing collinear revenue totals (`sales`, `order_item_total`, `benefit_per_order`), independent financial signals were reconstructed from base primitives:
 - **`effective_unit_price`**: True net unit realization after accounting for promotions:
-  $$\text{effective\_unit\_price} = \text{product\_price} \times (1 - \text{order\_item\_discount\_rate})$$
-- **`is_loss_making_item`**: Binary flag for transactions with negative profit ratios ($\text{order\_item\_profit\_ratio} < 0$), separating clearance merchandise and loss-leaders from standard product lines.
+  `effective_unit_price` $=$ `product_price` $\times (1 -$ `order_item_discount_rate` $)$
+- **`is_loss_making_item`**: Binary flag for transactions with negative profit ratios (`order_item_profit_ratio` $< 0$), separating clearance merchandise and loss-leaders from standard product lines.
 
 #### 3. Multi-Item Basket Aggregations
 Warehouse pick-and-pack duration scales with order complexity. By grouping line items by `order_id`, the pipeline aggregates order-level basket dynamics:
 - **`order_line_item_count`**: Total number of distinct catalog line items in the order package.
 - **`order_total_units`**: Total physical pieces packed into the consolidated shipment ($\sum \text{quantity}$).
 - **`order_total_sales`**: Aggregate net monetary value of the complete basket ($\sum \text{effective item sales}$).
-- **`item_share_of_order_units`**: Proportion of the order's total units accounted for by the current item line ($\text{quantity} / \text{order\_total\_units}$). Single-order API submissions gracefully fall back to 1.0.
+- **`item_share_of_order_units`**: Proportion of the order's total units accounted for by the current item line (`order_item_quantity` $/$ `order_total_units`). Single-order API submissions gracefully fall back to 1.0.
 
 #### 4. Fulfillment Origin & Cross-Border Logistics Routes
 Fulfillment transit times depend heavily on transit modalities and international borders:
 - **`origin_is_puerto_rico`**: Identifies orders fulfilled from distribution centers in Puerto Rico (`customer_country == "Puerto Rico"`), which necessitate maritime container or air freight handling prior to continental distribution.
-- **`is_cross_border_dest`**: Identifies whether the parcel destination is outside domestic origin territories (`order_country \notin \{\text{"Estados Unidos"}, \text{"Puerto Rico"}, \text{"EE. UU."}\}`), introducing customs clearance steps and international carrier handoffs.
+- **`is_cross_border_dest`**: Identifies whether the parcel destination is outside domestic origin territories (`order_country` not in `{"Estados Unidos", "Puerto Rico", "EE. UU."}`), introducing customs clearance steps and international carrier handoffs.
 
 #### 5. Pipeline Transformer & Column Selection
 The transformation is wrapped inside `SupplyChainFeatureBuilder`, a production-grade `scikit-learn` compatible transformer:
