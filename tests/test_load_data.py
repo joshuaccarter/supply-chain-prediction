@@ -2,6 +2,7 @@
 
 import re
 from pathlib import Path
+
 import pandas as pd
 import pytest
 
@@ -50,7 +51,10 @@ def test_load_raw_data_with_mock_csv(tmp_path: Path) -> None:
             "date_columns": ["order_date_dateorders"],
             "columns": {
                 "Type": {"name": "type", "dtype": "category"},
-                "Days for shipping (real)": {"name": "days_for_shipping_real", "dtype": "int64"},
+                "Days for shipping (real)": {
+                    "name": "days_for_shipping_real",
+                    "dtype": "int64",
+                },
                 "Days for shipment (scheduled)": {
                     "name": "days_for_shipment_scheduled",
                     "dtype": "int64",

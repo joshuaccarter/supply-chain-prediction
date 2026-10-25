@@ -1,8 +1,8 @@
 """Integration and unit tests for the FastAPI Supply Chain Prediction API."""
 
 from unittest.mock import patch
+
 from fastapi.testclient import TestClient
-import pytest
 
 from src.api.main import app
 
@@ -64,7 +64,10 @@ def test_predict_single_order_full_payload() -> None:
     assert 0 <= data["p50_shipping_days"] <= data["p90_shipping_days"] <= 6
     assert data["p50"] == data["p50_shipping_days"]
     assert data["p90"] == data["p90_shipping_days"]
-    assert data["safety_buffer_days"] == data["p90_shipping_days"] - data["p50_shipping_days"]
+    assert (
+        data["safety_buffer_days"]
+        == data["p90_shipping_days"] - data["p50_shipping_days"]
+    )
     assert isinstance(data["p50_raw"], float)
     assert isinstance(data["p90_raw"], float)
     assert data["p50_estimated_delivery_date"] == "2018-01-19 12:00:00"
@@ -79,7 +82,10 @@ def test_predict_single_order_minimal_defaults() -> None:
 
     assert data["shipping_mode"] == "Standard Class"
     assert 0 <= data["p50_shipping_days"] <= data["p90_shipping_days"] <= 6
-    assert data["safety_buffer_days"] == data["p90_shipping_days"] - data["p50_shipping_days"]
+    assert (
+        data["safety_buffer_days"]
+        == data["p90_shipping_days"] - data["p50_shipping_days"]
+    )
     assert data["p50_estimated_delivery_date"] is not None
     assert data["p90_sla_delivery_date"] is not None
 
@@ -166,7 +172,10 @@ def test_validation_errors_return_422() -> None:
 
 def test_missing_model_artifact_returns_503() -> None:
     """Verify HTTP 503 Service Unavailable is raised when model artifact is missing."""
-    with patch("src.api.routes.load_trained_model", side_effect=FileNotFoundError("Artifact missing")):
+    with patch(
+        "src.api.routes.load_trained_model",
+        side_effect=FileNotFoundError("Artifact missing"),
+    ):
         res_health = client.get("/health")
         assert res_health.status_code == 503
         assert "not found" in res_health.json()["detail"]

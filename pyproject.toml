@@ -39,6 +39,7 @@ exclude = [
     ".git",
     ".venv",
     "__pycache__",
+    "notebooks",
 ]
 
 [tool.ruff.lint]

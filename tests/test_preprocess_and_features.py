@@ -7,16 +7,11 @@ import pytest
 from src.data.load_data import load_raw_data
 from src.data.preprocess import (
     clean_and_preprocess,
-    drop_and_prune_columns,
     get_columns_to_drop,
     split_dataset,
 )
 from src.features.build_features import (
     SupplyChainFeatureBuilder,
-    add_basket_features,
-    add_financial_ratio_features,
-    add_temporal_features,
-    build_features,
 )
 from src.utils.config_loader import load_config
 
@@ -36,19 +31,40 @@ def sample_preprocessed_df() -> pd.DataFrame:
             "latitude": [18.2, 34.0, 34.0, 40.7, 18.2, 41.8],
             "longitude": [-66.5, -118.2, -118.2, -74.0, -66.5, -87.6],
             # Core categoricals & geography
-            "type": pd.Series(["DEBIT", "TRANSFER", "TRANSFER", "CASH", "DEBIT", "PAYMENT"], dtype="category"),
+            "type": pd.Series(
+                ["DEBIT", "TRANSFER", "TRANSFER", "CASH", "DEBIT", "PAYMENT"],
+                dtype="category",
+            ),
             "customer_country": pd.Series(
-                ["Puerto Rico", "EE. UU.", "EE. UU.", "EE. UU.", "Puerto Rico", "EE. UU."],
+                [
+                    "Puerto Rico",
+                    "EE. UU.",
+                    "EE. UU.",
+                    "EE. UU.",
+                    "Puerto Rico",
+                    "EE. UU.",
+                ],
                 dtype="category",
             ),
             "order_country": pd.Series(
-                ["Estados Unidos", "Francia", "Francia", "Puerto Rico", "Alemania", "Estados Unidos"],
+                [
+                    "Estados Unidos",
+                    "Francia",
+                    "Francia",
+                    "Puerto Rico",
+                    "Alemania",
+                    "Estados Unidos",
+                ],
                 dtype="string",
             ),
             # Entity & time keys
-            "order_id": pd.Series(["101", "102", "102", "103", "104", "105"], dtype="string"),
+            "order_id": pd.Series(
+                ["101", "102", "102", "103", "104", "105"], dtype="string"
+            ),
             "order_item_id": pd.Series(["1", "2", "3", "4", "5", "6"], dtype="string"),
-            "customer_id": pd.Series(["C1", "C2", "C2", "C1", "C3", "C4"], dtype="string"),
+            "customer_id": pd.Series(
+                ["C1", "C2", "C2", "C1", "C3", "C4"], dtype="string"
+            ),
             "order_date_dateorders": pd.to_datetime(
                 [
                     "2018-01-05 14:30:00",  # Friday 14:30
@@ -85,9 +101,15 @@ def sample_preprocessed_df() -> pd.DataFrame:
 def test_get_columns_to_drop_respects_flags() -> None:
     """Verify get_columns_to_drop toggles collinear and entity_and_time_keys properly."""
     cfg = load_config()
-    base_drop = get_columns_to_drop(config=cfg, include_collinear=False, include_entity_keys=False)
-    collinear_drop = get_columns_to_drop(config=cfg, include_collinear=True, include_entity_keys=False)
-    full_drop = get_columns_to_drop(config=cfg, include_collinear=True, include_entity_keys=True)
+    base_drop = get_columns_to_drop(
+        config=cfg, include_collinear=False, include_entity_keys=False
+    )
+    collinear_drop = get_columns_to_drop(
+        config=cfg, include_collinear=True, include_entity_keys=False
+    )
+    full_drop = get_columns_to_drop(
+        config=cfg, include_collinear=True, include_entity_keys=True
+    )
 
     # Leakage and duplicates are always in base_drop
     assert "shipping_delay_days" in base_drop
@@ -180,8 +202,12 @@ def test_split_dataset_chronological_preserves_temporal_order(
     assert train_orders.isdisjoint(test_orders)
     assert val_orders.isdisjoint(test_orders)
     assert len(train_df) + len(val_df) + len(test_df) == len(cleaned)
-    assert train_df["order_date_dateorders"].max() <= val_df["order_date_dateorders"].min()
-    assert val_df["order_date_dateorders"].max() <= test_df["order_date_dateorders"].min()
+    assert (
+        train_df["order_date_dateorders"].max() <= val_df["order_date_dateorders"].min()
+    )
+    assert (
+        val_df["order_date_dateorders"].max() <= test_df["order_date_dateorders"].min()
+    )
 
 
 def test_feature_engineering_calculations_and_leakage_free_transform(
@@ -193,7 +219,12 @@ def test_feature_engineering_calculations_and_leakage_free_transform(
     feat_df = builder.fit_transform(cleaned)
 
     # Entity and time keys should be dropped after feature building
-    for key_col in ["order_id", "order_item_id", "customer_id", "order_date_dateorders"]:
+    for key_col in [
+        "order_id",
+        "order_item_id",
+        "customer_id",
+        "order_date_dateorders",
+    ]:
         assert key_col not in feat_df.columns
 
     # Check temporal features on row 0 (2018-01-05 14:30:00 -> Friday, dow=4, hour=14, doy=5, q=1)
@@ -207,10 +238,18 @@ def test_feature_engineering_calculations_and_leakage_free_transform(
     assert feat_df.loc[0, "is_weekend_order"] == 0
     assert feat_df.loc[0, "is_after_hours_order"] == 0
     assert feat_df.loc[0, "is_q4_peak_season"] == 0
-    assert np.isclose(feat_df.loc[0, "order_month_sin"], np.sin(2.0 * np.pi * 1.0 / 12.0))
-    assert np.isclose(feat_df.loc[0, "order_month_cos"], np.cos(2.0 * np.pi * 1.0 / 12.0))
-    assert np.isclose(feat_df.loc[0, "order_doy_sin"], np.sin(2.0 * np.pi * 5.0 / 365.25))
-    assert np.isclose(feat_df.loc[0, "order_doy_cos"], np.cos(2.0 * np.pi * 5.0 / 365.25))
+    assert np.isclose(
+        feat_df.loc[0, "order_month_sin"], np.sin(2.0 * np.pi * 1.0 / 12.0)
+    )
+    assert np.isclose(
+        feat_df.loc[0, "order_month_cos"], np.cos(2.0 * np.pi * 1.0 / 12.0)
+    )
+    assert np.isclose(
+        feat_df.loc[0, "order_doy_sin"], np.sin(2.0 * np.pi * 5.0 / 365.25)
+    )
+    assert np.isclose(
+        feat_df.loc[0, "order_doy_cos"], np.cos(2.0 * np.pi * 5.0 / 365.25)
+    )
 
     # Row 1 (Saturday 21:15 -> weekend=1, after_hours=1)
     assert feat_df.loc[1, "is_weekend_order"] == 1

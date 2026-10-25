@@ -1,5 +1,6 @@
 # Supply Chain Shipping Duration & SLA Prediction Engine
 
+[![CI](https://github.com/joshuaccarter/supply-chain-prediction/actions/workflows/ci.yml/badge.svg)](https://github.com/joshuaccarter/supply-chain-prediction/actions/workflows/ci.yml)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com)
 [![LightGBM](https://img.shields.io/badge/LightGBM-4.7+-brightgreen.svg)](https://lightgbm.readthedocs.io/)

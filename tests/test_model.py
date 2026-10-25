@@ -2,12 +2,12 @@
 
 import json
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
 
 from src.models.evaluate import (
-    evaluate_by_scheduled_tier,
     evaluate_p50_p90,
     evaluate_predictions,
 )
@@ -27,7 +27,9 @@ def synthetic_training_df() -> pd.DataFrame:
     """Create a synthetic 60-row dataset spanning multiple orders and shipping tiers for fast training tests."""
     rng = np.random.default_rng(42)
     n_rows = 60
-    modes = np.tile(["Same Day", "First Class", "Second Class", "Standard Class"], n_rows // 4)
+    modes = np.tile(
+        ["Same Day", "First Class", "Second Class", "Standard Class"], n_rows // 4
+    )
     actual_days = np.tile([0, 2, 4, 4], n_rows // 4)
     order_ids = [f"ORD_{i // 2:03d}" for i in range(n_rows)]
     base_dates = pd.date_range("2017-01-01 09:00:00", periods=n_rows, freq="12h")
@@ -38,7 +40,9 @@ def synthetic_training_df() -> pd.DataFrame:
             "shipping_mode": pd.Series(modes, dtype="category"),
             "order_item_quantity": rng.integers(1, 5, size=n_rows),
             "product_price": rng.uniform(25.0, 250.0, size=n_rows).round(2),
-            "order_item_discount_rate": rng.choice([0.0, 0.05, 0.10, 0.15], size=n_rows),
+            "order_item_discount_rate": rng.choice(
+                [0.0, 0.05, 0.10, 0.15], size=n_rows
+            ),
             "order_item_profit_ratio": rng.uniform(-0.10, 0.35, size=n_rows).round(2),
             "latitude": rng.uniform(18.0, 42.0, size=n_rows).round(4),
             "longitude": rng.uniform(-120.0, -66.0, size=n_rows).round(4),
@@ -55,7 +59,9 @@ def synthetic_training_df() -> pd.DataFrame:
                 dtype="category",
             ),
             "market": pd.Series(
-                rng.choice(["LATAM", "Europe", "USCA", "Pacific Asia", "Africa"], size=n_rows),
+                rng.choice(
+                    ["LATAM", "Europe", "USCA", "Pacific Asia", "Africa"], size=n_rows
+                ),
                 dtype="category",
             ),
             "department_id": pd.Series(
@@ -63,16 +69,22 @@ def synthetic_training_df() -> pd.DataFrame:
                 dtype="category",
             ),
             "order_region": pd.Series(
-                rng.choice(["Central America", "Western Europe", "West of USA"], size=n_rows),
+                rng.choice(
+                    ["Central America", "Western Europe", "West of USA"], size=n_rows
+                ),
                 dtype="category",
             ),
             "order_country": pd.Series(
-                rng.choice(["Estados Unidos", "Francia", "México", "Alemania"], size=n_rows),
+                rng.choice(
+                    ["Estados Unidos", "Francia", "México", "Alemania"], size=n_rows
+                ),
                 dtype="string",
             ),
             "order_id": pd.Series(order_ids, dtype="string"),
             "order_item_id": pd.Series([str(i) for i in range(n_rows)], dtype="string"),
-            "customer_id": pd.Series([f"CUST_{i % 10}" for i in range(n_rows)], dtype="string"),
+            "customer_id": pd.Series(
+                [f"CUST_{i % 10}" for i in range(n_rows)], dtype="string"
+            ),
             "order_date_dateorders": base_dates,
         }
     )
@@ -218,8 +230,16 @@ def test_production_model_artifact_and_api_predictions() -> None:
     assert "p90_sla_delivery_date" in single_out
 
     # 2. Verify Same Day cutoff behavior (0 to 1 days)
-    same_day_morning = {**single_char, "shipping_mode": "Same Day", "order_date": "2018-01-15 10:00:00"}
-    same_day_night = {**single_char, "shipping_mode": "Same Day", "order_date": "2018-01-15 21:00:00"}
+    same_day_morning = {
+        **single_char,
+        "shipping_mode": "Same Day",
+        "order_date": "2018-01-15 10:00:00",
+    }
+    same_day_night = {
+        **single_char,
+        "shipping_mode": "Same Day",
+        "order_date": "2018-01-15 21:00:00",
+    }
     batch_out = predict_p50_p90([same_day_morning, same_day_night], model=model)
     assert isinstance(batch_out, list) and len(batch_out) == 2
     assert 0 <= batch_out[0]["p50"] <= 1
